@@ -10,11 +10,29 @@
   white  : true
 */
 /*global $, spa */
+(function(){
+  
+  var spa = angular.module('spa', [
+    'ngRoute',
+    'spa.ctr',
+    'spa.filter'
+  ]);
 
-var spa = (function () {
-  var initModule = function ( $container ) {
-    spa.shell.initModule( $container );
-  };
+  spa.config(['$routeProvider',
+    function($routeProvider) {
+      $routeProvider.
+        when('/phones', {
+          templateUrl: 'partials/object-list.html',
+          controller: 'spa.list.ctr'
+        }).
+        when('/phones/:phoneId', {
+          templateUrl: 'partials/object-detail.html',
+          controller: 'spa.detail.ctr'
+        }).
+        otherwise({
+          redirectTo: '/phones'
+        });
+    }
+  ]);
+})();
 
-  return { initModule: initModule };
-}());
